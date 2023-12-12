@@ -59,8 +59,6 @@ abstract class ApplicationTestCase extends TestCase
         // Sets a dedicated environment variable so that i.e. the TwigExtension can
         // detect if it's being run within CI AND a PHPUnit testcase, to prevent using
         // Azure URLs but instead local URLs for assets.
-        if (getenv('CI')) {
-            $_ENV['CI_PHPUNIT'] = true;
-        }
+        $_ENV['CI_PHPUNIT'] = true;
     }
 }

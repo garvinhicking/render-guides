@@ -26,7 +26,7 @@ runs:
   env:
     SHELL_VERBOSITY: '3'
   args:
-    - 'render '
+    - 'render'
     - '--working-dir=${{ inputs.working-directory }}'
     - '--config=${{ inputs.config }}'
     - '--output=${{ inputs.output }}'

@@ -24,7 +24,7 @@ runs:
   env:
     SHELL_VERBOSITY: '3'
   args:
-    - 'configure '
+    - 'configure'
     - '--project-release="${{ inputs.configure-project-release }}"'
     - '--project-version="${{ inputs.configure-project-version }}"'
     - '--extension-class="\T3Docs\Typo3DocsTheme\DependencyInjection\Typo3DocsThemeExtension"'

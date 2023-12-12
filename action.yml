@@ -38,9 +38,9 @@ runs:
     - uses: actions/configure-guides-step
       with:
           config: ${{ inputs.config }}
-          configure-branch: ${{ inputs.configure-branch}
-          configure-project-release: ${{ inputs.configure-project-release}
-          configure-project-version: ${{ inputs.configure-project-version}
+          configure-branch: ${{ inputs.configure-branch }}
+          configure-project-release: ${{ inputs.configure-project-release }}
+          configure-project-version: ${{ inputs.configure-project-version }}
 
     - uses: actions/render-guides-step
       with:

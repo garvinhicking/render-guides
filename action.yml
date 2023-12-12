@@ -35,14 +35,14 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: garvinhicking/render-guides/.github/actions/configure-guides-step
+    - uses: garvinhicking/render-guides/.github/actions/configure-guides-step@main
       with:
           config: ${{ inputs.config }}
           configure-branch: ${{ inputs.configure-branch }}
           configure-project-release: ${{ inputs.configure-project-release }}
           configure-project-version: ${{ inputs.configure-project-version }}
 
-    - uses: garvinhicking/render-guides/.github/actions/render-guides-step
+    - uses: garvinhicking/render-guides/.github/actions/render-guides-step@main
       with:
         working-directory: ${{ inputs.working-directory }}
         config: ${{ inputs.config }}

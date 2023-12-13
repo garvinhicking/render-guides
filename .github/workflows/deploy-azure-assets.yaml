@@ -1,0 +1,28 @@
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+      - '*.*.*'
+    branches:
+      - stable
+    paths:
+      - "packages/typo3-docs-theme/**"
+  pull_request: null
+  release:
+    types:
+      - published
+
+env:
+  REGISTRY: ghcr.io
+
+name: Deploy typo3-docs-theme on Azure (on STABLE)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check assets to be uploaded
+        run: |
+          find packages/typo3-docs-theme/resources/public

@@ -57,4 +57,4 @@ jobs:
           source: "packages/typo3-docs-theme/resources/public/"
           rm: true
           strip_components: 3
-          target: ${{ secrets.TARGET_PATH }}/{{ $env.LATEST_TAG }}/
+          target: ${{ secrets.TARGET_PATH }}/{{ env.LATEST_TAG }}/

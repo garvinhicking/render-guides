@@ -31,17 +31,6 @@ jobs:
         run: |
           echo IMAGE_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
 
-      - name: Determine version
-        id: determine-version
-        run: |
-          if [[ "${GITHUB_REF/refs\/tags\//}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "::set-output name=TYPO3AZUREEDGEURIVERSION::${GITHUB_REF/refs\/tags\//}"
-            echo "##[set-output name=custom_message]::set-output name=custom_message::\e[32mUsing VERSION-Tag: $TYPO3AZUREEDGEURIVERSION\e[0m"
-          else
-            echo "::set-output name=TYPO3AZUREEDGEURIVERSION::stable"
-            echo "##[set-output name=custom_message]::set-output name=custom_message::\e[32mUsing FIXED VERSION-Tag: stable\e[0m"
-          fi
-
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
@@ -104,6 +93,15 @@ jobs:
         run: |
           echo IMAGE_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
 
+      - name: Determine version
+        id: determine-version
+        run: |
+          if [[ "${GITHUB_REF/refs\/tags\//}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo TYPO3AZUREEDGEURIVERSION=garv-version-$(echo ${GITHUB_REF/refs\/tags\//}) >> $GITHUB_ENV
+          else
+            echo TYPO3AZUREEDGEURIVERSION=garv-stable-$(echo ${GITHUB_REF/refs\/tags\//}) >> $GITHUB_ENV
+          fi
+
       -
         name: Download digests
         uses: actions/download-artifact@v3
@@ -129,10 +127,10 @@ jobs:
       -
         name: Create manifest list and push
         env:
-          TYPO3AZUREEDGEURIVERSION: ${{ steps.determine-version.outputs.TYPO3AZUREEDGEURIVERSION }}
+          TYPO3AZUREEDGEURIVERSION: ${{ env.TYPO3AZUREEDGEURIVERSION }}
         working-directory: /tmp/digests
         run: |
-          echo "Baking-in TYPO3AZUREEDGEURIVERSION = $TYPO3AZUREEDGEURIVERSION = ${{ env.TYPO3AZUREEDGEURIVERSION }}"
+          echo "Baking-in TYPO3AZUREEDGEURIVERSION = ${{ env.TYPO3AZUREEDGEURIVERSION }}"
           docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
             $(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@sha256:%s ' *)
       -

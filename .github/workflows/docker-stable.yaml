@@ -132,7 +132,8 @@ jobs:
           TYPO3AZUREEDGEURIVERSION: ${{ steps.determine-version.outputs.TYPO3AZUREEDGEURIVERSION }}
         working-directory: /tmp/digests
         run: |
-          docker buildx imagetools create --build-arg TYPO3AZUREEDGEURIVERSION=$TYPO3AZUREEDGEURIVERSION $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+          echo "Baking-in TYPO3AZUREEDGEURIVERSION = $TYPO3AZUREEDGEURIVERSION = ${{ env.TYPO3AZUREEDGEURIVERSION }}"
+          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
             $(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@sha256:%s ' *)
       -
         name: Inspect image

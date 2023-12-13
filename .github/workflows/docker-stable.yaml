@@ -118,6 +118,9 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=stable,enable=true
+            type=raw,value=latest,enable=false
 
       - name: Log in to the Container registry
         uses: docker/login-action@v3
@@ -132,8 +135,8 @@ jobs:
         working-directory: /tmp/digests
         run: |
           echo "Baking-in TYPO3AZUREEDGEURIVERSION = ${{ env.TYPO3AZUREEDGEURIVERSION }}"
-          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' -t stable <<< "$DOCKER_METADATA_OUTPUT_JSON") \
-            $(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@sha256:%s ' *)
+          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+            -t stable $(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@sha256:%s ' *)
       -
         name: Inspect image
         run: |

@@ -81,7 +81,7 @@ jobs:
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
-          build-args: TYPO3AZUREEDGEURIVERSION=arg-${{ env.TYPO3AZUREEDGEURIVERSION }}
+          build-args: TYPO3AZUREEDGEURIVERSION=${{ env.TYPO3AZUREEDGEURIVERSION }}
           cache-to: type=gha,mode=max
           outputs: type=image,name=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }},push-by-digest=true,name-canonical=true,push=true
       -

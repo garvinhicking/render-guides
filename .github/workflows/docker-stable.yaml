@@ -119,6 +119,9 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
             type=raw,value=stable,enable=true
             type=raw,value=latest,enable=false
 
@@ -136,7 +139,7 @@ jobs:
         run: |
           echo "Baking-in TYPO3AZUREEDGEURIVERSION = ${{ env.TYPO3AZUREEDGEURIVERSION }}"
           docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
-            -t stable $(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@sha256:%s ' *)
+            $(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@sha256:%s ' *)
       -
         name: Inspect image
         run: |

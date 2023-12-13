@@ -23,6 +23,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Get latest tag
+        id: get-latest-tag
+        run: |
+            # Fetch tags
+            git fetch --tags
+
+            # Get the latest tag
+            latest_tag=$(git describe --tags --abbrev=0)
+
+            # Set the output variable
+            echo LATEST_TAG=$latest_tag >> $GITHUB_ENV
+
+            echo "Using latest tag: $latest_tag"
+
       - name: Check assets to be uploaded
         run: |
+          echo "Prepare to upload to ${{ env.LATEST_TAG }}"
           find packages/typo3-docs-theme/resources/public

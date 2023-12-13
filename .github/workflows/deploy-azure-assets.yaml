@@ -48,13 +48,26 @@ jobs:
           echo "Prepare to upload to ${{ env.LATEST_TAG }}"
           find packages/typo3-docs-theme/resources/public
 
-      - name: Upload Assets
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.DEPLOY_DOCS_HOST }}
-          username: ${{ secrets.DEPLOY_DOCS_USERNAME }}
-          key: ${{ secrets.DEPLOY_KEY }}
-          source: "packages/typo3-docs-theme/resources/public/"
-          strip_components: 4
-          rm: true
-          target: ${{ secrets.TARGET_PATH }}/${{ env.LATEST_TAG }}/
+      # (DEBUG) Dummy action to upload via SSH instead of Azure
+      #- name: Upload Assets SSH
+      #  uses: appleboy/scp-action@master
+      #  with:
+      #    host: ${{ secrets.DEPLOY_DOCS_HOST }}
+      #    username: ${{ secrets.DEPLOY_DOCS_USERNAME }}
+      #    key: ${{ secrets.DEPLOY_KEY }}
+      #    source: "packages/typo3-docs-theme/resources/public/"
+      #    strip_components: 4
+      #    rm: true
+      #    target: ${{ secrets.TARGET_PATH }}/${{ env.LATEST_TAG }}/
+
+      - name: Bundle for Azure upload (in "cdn")
+        run: |
+          mkdir -p cdn/theme/typo3-docs-theme/${{ env.LATEST_TAG }}/
+          cp -r packages/typo3-docs-theme/resources/public/* cdn/theme/typo3-docs-theme/${{ env.LATEST_TAG }}/
+
+      - name: Upload to Azure
+        env:
+          AZURE_STORAGE_ACCOUNT: ${{ secrets.AZURE_ACCOUNT }}
+          AZURE_STORAGE_KEY: ${{ secrets.AZURE_KEY }}
+        run: |
+          az storage blob upload-batch --source packages/typo3-docs-theme/resources/public/ --destination ${{ secrets.AZURE_CONTAINER }}

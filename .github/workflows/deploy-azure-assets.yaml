@@ -1,3 +1,8 @@
+# NOTE: Azure Assets are only deployed when a commit happens in
+# "stable" branch AND changes anyhting in packages/typo3-docs-theme/
+# If no files there are changed, no upload needs to take place.
+# For the target upload version, the most recent GIT tag to the
+# stable branch
 on:
   push:
     tags:
@@ -27,7 +32,7 @@ jobs:
         id: get-latest-tag
         run: |
             # Fetch tags
-            git fetch --tags
+            git fetch --tags origin stable
 
             # Get the latest tag
             latest_tag=$(git describe --tags --abbrev=0)

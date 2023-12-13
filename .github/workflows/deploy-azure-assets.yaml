@@ -55,6 +55,6 @@ jobs:
           username: ${{ secrets.DEPLOY_DOCS_USERNAME }}
           key: ${{ secrets.DEPLOY_KEY }}
           source: "packages/typo3-docs-theme/resources/public/"
+          strip_components: 4
           rm: true
-          strip_components: 3
-          target: ${{ secrets.TARGET_PATH }}/{{ env.LATEST_TAG }}/
+          target: ${{ secrets.TARGET_PATH }}/${{ env.LATEST_TAG }}/

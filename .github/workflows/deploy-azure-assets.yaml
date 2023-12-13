@@ -35,8 +35,8 @@ jobs:
             # Fetch tags
             git fetch --tags
 
-            # Get the latest tag within "stable" branch
-            latest_tag=$(git describe --tags --abbrev=0 --match "*.*.*" --always)
+            # Get the latest tag (globally, see note above)
+            latest_tag=$(git tag -l --sort=-creatordate "*.*.*" | head -n 1)
 
             # Set the output variable
             echo LATEST_TAG=$latest_tag >> $GITHUB_ENV

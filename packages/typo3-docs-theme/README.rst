@@ -1,4 +1,4 @@
-(trigger6)
+(trigger7)
 
 ===============================================
 Theme for PHP based rendering of docs.typo3.org

@@ -34,8 +34,8 @@ jobs:
             # Fetch tags
             git fetch --tags origin stable
 
-            # Get the latest tag
-            latest_tag=$(git describe --tags --abbrev=0 --always)
+            # Get the latest tag within "stable" branch
+            latest_tag=$(git describe --tags --abbrev=0 --match "stable/*" $(git rev-list --tags --max-count=1 --skip=1 --branches=stable --no-walk --date-order))
 
             # Set the output variable
             echo LATEST_TAG=$latest_tag >> $GITHUB_ENV

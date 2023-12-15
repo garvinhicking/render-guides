@@ -8,7 +8,7 @@
     {
       "name": "split-typo3-guides-extension",
       "directory": "packages/typo3-guides-extension",
-      "target": "git@github.com:garvinhicking/split-typo3-guides-extension.gitt"
+      "target": "git@github.com:garvinhicking/split-typo3-guides-extension.git"
     },
     {
       "name": "split-typo3-docs-theme",

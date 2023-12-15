@@ -1,0 +1,19 @@
+{
+  "sub-splits": [
+    {
+      "name": "split-typo3-guides-cli",
+      "directory": "packages/typo3-guides-cli",
+      "target": "git@github.com:garvinhicking/split-typo3-guides-cli.git"
+    },
+    {
+      "name": "split-typo3-guides-extension",
+      "directory": "packages/typo3-guides-extension",
+      "target": "git@github.com:garvinhicking/split-typo3-guides-extension.gitt"
+    },
+    {
+      "name": "split-typo3-docs-theme",
+      "directory": "packages/typo3-docs-theme",
+      "target": "git@github.com:garvinhicking/split-typo3-docs-theme.git"
+    }
+  ]
+}
